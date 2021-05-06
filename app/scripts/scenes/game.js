@@ -133,16 +133,17 @@ export default class Game extends Phaser.Scene {
   }
 
   initComfy() {
-    const channel = phaserHelpers.getUrlParam('channel') || 'goldzulu';
-    ComfyJS.Init(channel, null, [channel]);
+    const channel = phaserHelpers.getUrlParam('channel') || '';
+    const channel2 = phaserHelpers.getUrlParam('channel2');
+    ComfyJS.Init(channel, null, [channel, channel2]);
 
-    ComfyJS.onJoin = (user, self) => {
-      if (this.userGroup.getChildren().length >= 40) {
-        return;
-      }
+    // ComfyJS.onJoin = (user, self) => {
+    //   if (this.userGroup.getChildren().length >= 40) {
+    //     return;
+    //   }
 
-      this.addUserSprite(user);
-    };
+    //   this.addUserSprite(user);
+    // };
 
     ComfyJS.onPart = user => UserSprite.userParted(this.userGroup, user);
 
@@ -160,10 +161,10 @@ export default class Game extends Phaser.Scene {
     };
 
     ComfyJS.onChat = (user, message, flags, self, extra) => {
-      if (extra.customRewardId) {
-        this.sound.play('airhorn');
-        channelPointsHandler.redeem(this, user, extra.customRewardId, message);
-      }
+      // if (extra.customRewardId) {
+      //   this.sound.play('airhorn');
+      //   channelPointsHandler.redeem(this, user, extra.customRewardId, message);
+      // }
 
       const sprite = this.addUserSprite(user, message, flags);
       if (sprite) {
